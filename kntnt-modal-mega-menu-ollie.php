@@ -3,7 +3,7 @@
  * Plugin Name:       Kntnt Modal Mega Menu for Ollie
  * Plugin URI:        https://github.com/Kntnt/kntnt-modal-mega-menu-ollie
  * Description:       Makes the Dropdown Menu from Ollie Menu Designer behave like a modal: it locks the page behind an open menu and scrolls a tall menu internally instead of running off the bottom of the screen.
- * Version:           0.1.0
+ * Version:           0.1.1
  * Requires at least: 6.5
  * Requires PHP:      8.3
  * Requires Plugins:  ollie-menu-designer

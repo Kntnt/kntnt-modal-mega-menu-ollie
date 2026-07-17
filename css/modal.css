@@ -17,9 +17,20 @@
 /* Lock the page behind an open mega menu. Keyed to *any* open toggle, so the
    lock is on whenever at least one menu is open and lifts the moment the last
    one closes. Both the root element and the body are targeted because either
-   can be the scroll container depending on the theme; locking the one that is
-   not the scroller is a harmless no-op. */
+   can be the scroll container depending on the theme; naming both is what makes
+   the lock hold on either kind of site.
+
+   `clip`, never `hidden`. `overflow: hidden` turns the element into a scroll
+   container. On the ROOT element, while the page is scrolled, that reparents
+   the scrollport that every `position: sticky` descendant sticks to, and the
+   header drops from its pinned position to its in-flow one – off the top of the
+   screen by the current scroll amount, taking a mega menu panel hung off its
+   bottom edge with it (Ollie makes its header sticky, so this bites here). The
+   frozen page can't be scrolled to reach the stranded menu; only closing it
+   (Esc) lifts the lock and restores the header. `overflow: clip` locks the
+   scroll identically but establishes NO scroll container, so the sticky header
+   keeps sticking and the menu opens where it should. */
 html:has(.wp-block-ollie-mega-menu__toggle[aria-expanded="true"]),
 body:has(.wp-block-ollie-mega-menu__toggle[aria-expanded="true"]) {
-  overflow: hidden;
+  overflow: clip;
 }

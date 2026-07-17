@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 
 ## [Unreleased]
 
+## [0.1.1] – 2026-07-17
+
+### Fixed
+
+- The scroll lock no longer breaks a sticky header. It used `overflow: hidden`, which on the root element turns it into a scroll container and un-sticks any `position: sticky` header while the page is scrolled: opening a mega menu after scrolling down dropped the header (and the menu panel hung off it) off the top of the screen, and the frozen page couldn't be scrolled to reach it – only Esc released it. The lock now uses `overflow: clip`, which locks the page identically but establishes no scroll container, so the sticky header keeps sticking and the menu opens in place.
+
 ## [0.1.0] – 2026-07-17
 
 ### Added
@@ -17,5 +23,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 - Self-updating from the project's GitHub releases: the plugin appears under *Dashboard → Updates* like any other, checking the repository named by its own `Plugin URI` header at most once every six hours. A release is only offered when it carries a ZIP asset served from GitHub's own download hosts, so a tampered header cannot redirect the update installer at an attacker's package.
 - `build-release-zip.sh`, which builds a release zip containing only runtime files, and can create or update the GitHub release and upload the asset. The asset name carries no version segment, keeping the `latest/download` URL stable.
 
-[Unreleased]: https://github.com/Kntnt/kntnt-modal-mega-menu-ollie/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Kntnt/kntnt-modal-mega-menu-ollie/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/Kntnt/kntnt-modal-mega-menu-ollie/releases/tag/v0.1.1
 [0.1.0]: https://github.com/Kntnt/kntnt-modal-mega-menu-ollie/releases/tag/v0.1.0
