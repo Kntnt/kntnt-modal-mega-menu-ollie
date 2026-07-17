@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 
 ## [Unreleased]
 
+## [0.1.0] – 2026-07-17
+
 ### Added
 
 - Modal behaviour for Ollie Menu Designer's Dropdown Menu: while a menu is open the page behind it is locked, so trying to scroll the menu no longer scrolls the page instead. The lock is keyed to any open menu and lifts the moment the last one closes. The plugin adds no classes and no styling of its own.
@@ -14,3 +16,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 - A PHP version guard in the main plugin file, as a second line of defence for installs that load the plugin outside the normal activation path.
 - Self-updating from the project's GitHub releases: the plugin appears under *Dashboard → Updates* like any other, checking the repository named by its own `Plugin URI` header at most once every six hours. A release is only offered when it carries a ZIP asset served from GitHub's own download hosts, so a tampered header cannot redirect the update installer at an attacker's package.
 - `build-release-zip.sh`, which builds a release zip containing only runtime files, and can create or update the GitHub release and upload the asset. The asset name carries no version segment, keeping the `latest/download` URL stable.
+
+[Unreleased]: https://github.com/Kntnt/kntnt-modal-mega-menu-ollie/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/Kntnt/kntnt-modal-mega-menu-ollie/releases/tag/v0.1.0

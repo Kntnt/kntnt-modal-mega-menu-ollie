@@ -36,7 +36,7 @@ That is all. There is no settings page and no Site Editor step: the plugin works
 
 This plugin is a companion to [Kntnt Transparent Header for Ollie Pro](https://github.com/Kntnt/kntnt-transparent-header-ollie-pro), not a dependency of it, and the two are designed to compose.
 
-That plugin makes the transition between a transparent and a solid header look right when a mega menu opens over it — the yellow band where two fading layers overlap, and the header and menu arriving in step. This plugin handles the general modal behaviour that has nothing to do with transparency: the scroll lock and the internal scroll.
+That plugin makes the transition between a transparent and a solid header look right when a mega menu opens over it – the yellow band where two fading layers overlap, and the header and menu arriving in step. This plugin handles the general modal behaviour that has nothing to do with transparency: the scroll lock and the internal scroll.
 
 They cooperate without knowing about each other. The transparent-header plugin may hang the panel off the header's bottom edge; this plugin measures the panel's actual position before capping its height, so whatever the other plugin sets, the cap is taken from there down. Install either, both, or neither.
 
@@ -54,7 +54,7 @@ html {
 
 This is left to you rather than shipped, because reserving the gutter is a visible layout choice that belongs with your design, not with the plugin.
 
-**Opting a menu out.** There is no per-menu setting. If you need one specific menu to keep the page scrollable, or not to be capped, override it in your own CSS or a fork — the behaviour hangs on Ollie Menu Designer's own block classes, which are stable selectors.
+**Opting a menu out.** There is no per-menu setting. If you need one specific menu to keep the page scrollable, or not to be capped, override it in your own CSS or a fork – the behaviour hangs on Ollie Menu Designer's own block classes, which are stable selectors.
 
 ## Known limitations
 
@@ -68,11 +68,11 @@ A few decisions look like they could be trimmed. They can't.
 
 | Looks like you could… | Why it stays |
 | --- | --- |
-| Cap the menu at Ollie's default position instead of measuring it. | The panel's top is measured live because another plugin (a transparent header) may move it. Assume the default and the cap is wrong the moment the panel is repositioned — the menu spills past the bottom again by exactly the offset. |
+| Cap the menu at Ollie's default position instead of measuring it. | The panel's top is measured live because another plugin (a transparent header) may move it. Assume the default and the cap is wrong the moment the panel is repositioned – the menu spills past the bottom again by exactly the offset. |
 | Lock only the `body`. | Either the root element or the `body` can be the scroll container depending on the theme. Locking only one silently fails to lock on the other kind of site. Locking both is safe: the one that is not the scroller is a no-op. |
 | Cap the mobile menu too. | Ollie's mobile overlay is `position: fixed` with its own `overflow-y: scroll`. Capping it fights Ollie. The clamp skips any `fixed` panel for exactly that reason. |
 | Add a stylesheet dependency or a special enqueue order. | The scroll-lock rule outranks Ollie Menu Designer's own `body:has()` rule on specificity, so source order doesn't decide it. A dependency would imply an ordering that isn't there. |
-| Drop the internal-scroll script — surely Ollie handles tall menus. | Only on mobile. On desktop Ollie gives the panel `overflow: visible` and no `max-height`, so a tall menu is unreachable. This script is a temporary stand-in until Ollie Menu Designer caps the desktop panel itself; see below. |
+| Drop the internal-scroll script – surely Ollie handles tall menus. | Only on mobile. On desktop Ollie gives the panel `overflow: visible` and no `max-height`, so a tall menu is unreachable. This script is a temporary stand-in until Ollie Menu Designer caps the desktop panel itself; see below. |
 
 ### The internal scroll is a temporary workaround
 
@@ -114,6 +114,6 @@ Found a bug or want to request a feature? Please [open an issue](https://github.
 
 See [CHANGELOG.md](CHANGELOG.md).
 
-## License
+## Licence
 
 GPL-2.0-or-later. See [LICENSE](LICENSE).
