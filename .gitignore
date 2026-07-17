@@ -1,0 +1,28 @@
+# Composer dependencies – dev tooling only; the plugin ships no runtime
+# dependency and no vendor/.
+/vendor/
+
+# Release artefacts built by ./build-release-zip.sh.
+/dist/
+/kntnt-modal-mega-menu-ollie.zip
+
+# Local environment overrides
+.env
+.env.local
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# macOS
+.DS_Store
+
+# Editor / IDE settings
+.idea/
+.vscode/
+
+# Editor backups
+*.swp
+*~
+
+# PHPStan local override; phpstan.neon.dist is the committed config.
+/phpstan.neon

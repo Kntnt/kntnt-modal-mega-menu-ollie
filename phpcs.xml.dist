@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<ruleset name="kntnt-modal-mega-menu-ollie">
+
+	<description>WordPress Coding Standards with the deliberate deviations documented in agents.d/coding-standard/wordpress.md.</description>
+
+	<!-- The production PHP: the namespace classes plus the two root files. -->
+	<file>classes/</file>
+	<file>kntnt-modal-mega-menu-ollie.php</file>
+	<file>autoloader.php</file>
+
+	<!-- Only PHP files. -->
+	<arg name="extensions" value="php"/>
+
+	<!-- Show sniff codes and progress, with colour. -->
+	<arg value="sp"/>
+	<arg name="colors"/>
+
+	<!-- Baseline: the WordPress Coding Standards. -->
+	<rule ref="WordPress">
+
+		<!--
+			Deliberate deviation 1: modern PHP array syntax.
+			The project uses [ ... ] literals; array() is banned by choice. Both
+			the Generic and Universal short-array sniffs are excluded so the
+			DisallowLongArraySyntax rule added below can enforce the modern
+			syntax without a conflicting sniff.
+		-->
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+
+		<!--
+			Deliberate deviation 2: PSR-4 filenames.
+			WordPress CS expects class-classname.php; the autoloader maps
+			Pascal_Snake_Case class names 1:1 to <Class_Name>.php.
+		-->
+		<exclude name="WordPress.Files.FileName"/>
+
+		<!--
+			Deliberate deviation 3: namespaces over global function prefixes.
+			PHP code lives inside \Kntnt\Modal_Mega_Menu_Ollie rather than
+			under a kntnt_ function-name prefix. The prefix is still used for
+			identifiers that live in a global registry – the two bootstrap
+			functions in the main plugin file, which cannot be namespaced.
+		-->
+		<exclude name="WordPress.NamingConventions.PrefixAllGlobals"/>
+
+		<!--
+			Deliberate deviation 4: Yoda conditions are not required.
+			Natural order is the default (strict_types removes the original
+			safety motivation); Yoda only when it genuinely improves readability.
+		-->
+		<exclude name="WordPress.PHP.YodaConditions"/>
+
+		<!--
+			The standard forbids vertical alignment of = and => across lines. Two
+			separate sniffs enforce the opposite – one for assignments, one for
+			the double arrows inside a multi-line array – so both are excluded and
+			the no-alignment rule wins.
+
+			Excluding is the strongest available move, not a satisfying one: no
+			installed sniff can *enforce* single-space. WordPress.Arrays.
+			MultipleStatementAlignment only ever demands alignment, and its
+			maxColumn property does not invert it – set low, every item fails the
+			`$index_end_cols` filter and the sniff returns without checking at all.
+			So aligned `=>` passes this gate silently; only review catches it.
+			Enforcement needs a custom sniff – Kntnt/kntnt-code-skills#38.
+		-->
+		<exclude name="Generic.Formatting.MultipleStatementAlignment"/>
+		<exclude name="WordPress.Arrays.MultipleStatementAlignment"/>
+
+		<!--
+			Paragraph style requires a blank line before the closing brace of a
+			function / method body (and of a class body). PSR2's
+			FunctionClosingBrace and ClassDeclaration sniffs forbid that blank
+			line; the paragraph style takes precedence.
+		-->
+		<exclude name="PSR2.Methods.FunctionClosingBrace"/>
+		<exclude name="PSR2.Classes.ClassDeclaration"/>
+
+		<!--
+			The same paragraph rule applies inside a control structure: a
+			paragraph's trailing blank line stands even when the paragraph is the
+			last one in a loop or conditional body. BlankLineAfterEnd forbids
+			exactly that; the paragraph style takes precedence.
+		-->
+		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.BlankLineAfterEnd"/>
+
+	</rule>
+
+	<!-- Require short array syntax ([ ]) – never array(). -->
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+
+	<!--
+		Generic.Files.LineLength is deliberately absent. The standard puts no upper
+		limit on a code line (agents.d/coding-standard/php.md, "Line width"): a long
+		line beats breaking arguments apart to satisfy a column count.
+
+		The standard's one width rule – a comment on its own line never passes
+		column 80 – is NOT enforced here, because it cannot be. LineLength carries a
+		single limit for every line and no shipped sniff measures comments
+		separately; the standard's trailing-comment exception is doubly beyond it,
+		since `$x = f(); // note` is one line that is both code and comment.
+		Enforcing it needs a custom sniff – Kntnt/kntnt-code-skills#37. Until then
+		comment width is a review responsibility, not a gate.
+	-->
+
+	<!--
+		Keep in step with the `Requires at least` header: this is what makes the
+		WPCS deprecation sniffs flag anything that died after the floor we
+		promise to run on.
+	-->
+	<config name="minimum_supported_wp_version" value="6.5"/>
+
+	<!--
+		No testVersion here. It belongs to PHPCompatibility, which this project
+		does not install – and would not benefit from: its last stable (9.3.5,
+		2019) has no knowledge of PHP 8.0 or later, so it reports nothing on this
+		codebase at any testVersion and only reads like a gate. The `Requires PHP`
+		floor is enforced by PHPStan's `phpVersion` instead – see
+		phpstan.neon.dist.
+	-->
+
+</ruleset>

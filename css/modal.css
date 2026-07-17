@@ -1,0 +1,25 @@
+/**
+ * Modal behaviour for the Ollie Menu Designer mega menu.
+ *
+ * Ollie Menu Designer's Dropdown Menu opens as an ordinary dropdown: the page
+ * behind it keeps scrolling, so a visitor who tries to scroll the menu scrolls
+ * the page instead. This file makes the open menu behave like a modal by
+ * locking the page behind it. The other half of "modal" – a tall menu that
+ * scrolls inside itself instead of running off the screen – is measured in
+ * js/modal.js, because only the script knows the space left below the menu.
+ *
+ * The plugin targets Ollie Menu Designer's own block classes
+ * (`wp-block-ollie-mega-menu*`). They are an upstream contract, not ours: if
+ * OllieWP renames them the selectors here stop matching. That is by design –
+ * the plugin patches that block and nothing else.
+ */
+
+/* Lock the page behind an open mega menu. Keyed to *any* open toggle, so the
+   lock is on whenever at least one menu is open and lifts the moment the last
+   one closes. Both the root element and the body are targeted because either
+   can be the scroll container depending on the theme; locking the one that is
+   not the scroller is a harmless no-op. */
+html:has(.wp-block-ollie-mega-menu__toggle[aria-expanded="true"]),
+body:has(.wp-block-ollie-mega-menu__toggle[aria-expanded="true"]) {
+  overflow: hidden;
+}
